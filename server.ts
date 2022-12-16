@@ -5,6 +5,7 @@ import * as mongoose from 'mongoose';
 import bodyParser = require('body-parser');
 import UserRouter from './src/src/user/router';
 import AIRouter from './src/src/AI/routes';
+import RazorRouter from './src/razoorpay/routes';
 
 export class Server {
   public app: express.Application = express();
@@ -37,8 +38,8 @@ export class Server {
 
   setRoutes() {
     this.app.use('/user', UserRouter);
-    this.app.use('/AI', AIRouter);
-    this.app.use('/razorpay', AIRouter);
+    this.app.use('/ai', AIRouter);
+    this.app.use('/razorpay',RazorRouter );
 
   }
   error404Handler() {

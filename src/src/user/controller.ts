@@ -38,7 +38,8 @@ export default class userController {
 
   static async login(req: any, res: any) {
     try {
-      let secret: any = process.env.SECRET_KEY;
+      let secret: any = process.env.JWT_SECRET_KEY;
+      console.log(secret)
       let user: any = await User.findOne({ email: req.body.email });
 
       if (user) {
@@ -53,7 +54,7 @@ export default class userController {
             {
               email: user.email,
               _id: user._id,
-              role: user.role,
+              requestBalance: user.requestBalance,
             },
             secret
           );

@@ -11,7 +11,7 @@ class AIRouter {
 
   getRoutes() {
    
-    this.router.get('/AI', AIController.AI);
+    this.router.post('/AI',GlobalMiddleWare.checkRequest, AIController.AI);
 
   }
 }

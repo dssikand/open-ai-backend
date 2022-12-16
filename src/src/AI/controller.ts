@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from 'openai';
 const configuration = new Configuration({
-  apiKey: process.env.TZ,
+  apiKey: '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',
 });
 
 const openai = new OpenAIApi(configuration);
@@ -25,6 +25,8 @@ export class AIController {
     var Explaincode = req.body.text;
     var JavaScripttoPython = req.body.text;
     var CodeForQandA = req.body.text;
+    var CodeForPlayground = req.body.text;
+
 
     try {
       switch (req.body.text) {
@@ -91,7 +93,7 @@ export class AIController {
             model: 'code-davinci-002',
             prompt: PythonDocstring,
             temperature: 0,
-            max_tokens: 182,
+            max_tokens: 150,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -154,7 +156,7 @@ export class AIController {
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
-            stop: ['#', ';'],
+            stop: ["#", ";"],
           });
 
           res.json({ data: SQLTranslater.data });
@@ -208,10 +210,11 @@ export class AIController {
             model: 'code-davinci-002',
             prompt: TranslateProgrammingLanguage,
             temperature: 0,
-            max_tokens: 256,
+            max_tokens: 54,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
+            stop: ['###'],
           });
 
           res.json({ data: TranslateProgrammingLanguages.data });
@@ -236,7 +239,7 @@ export class AIController {
             model: 'code-davinci-002',
             prompt: writeJavaScript,
             temperature: 0,
-            max_tokens: 200,
+            max_tokens: 256,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -289,6 +292,19 @@ export class AIController {
           });
 
           res.json({ data: CodeForqAnda.data });
+          break;
+          // 19> Case for JavaScript to Python
+        case CodeForPlayground:
+          var playGround = await openai.createCompletion({
+            model: 'code-davinci-002',
+            prompt: CodeForPlayground,
+            temperature: 0,
+            max_tokens: 256,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: playGround.data });
           break;
       }
     } catch (error) {
