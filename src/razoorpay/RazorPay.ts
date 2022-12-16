@@ -1,5 +1,5 @@
 import Razorpay from 'razorpay';
-var instance = new Razorpay({ key_id: 'rzp_test_szXLeJLXBo8aB4', key_secret: 'i7tjFODTUOlG0HlOt9gT5ow6' });
+var instance = new Razorpay({ key_id: process.env.RAZOR_SECRET, key_secret: process.env.KEY_SECRET });
 import crypto from 'crypto';
 
 export class razorpay {
@@ -29,7 +29,7 @@ export class razorpay {
       const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
       const sign = razorpay_order_id + '|' + razorpay_payment_id;
       const expectedSign: any = crypto
-        .createHmac('sha256', 'i7tjFODTUOlG0HlOt9gT5ow6')
+        .createHmac('sha256', process.env.KEY_SECRET)
         .update(sign.toString())
         .digest('hex');
       console.log(expectedSign,"SignatureForVerification");

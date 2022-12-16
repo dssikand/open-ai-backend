@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from 'openai';
 const configuration = new Configuration({
-  apiKey: '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',
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
@@ -270,7 +270,7 @@ export class AIController {
             temperature: 0,
             max_tokens: 256,
             top_p: 1,
-            frequency_penalty: 0,
+            frequency_penalty: 0, 
             presence_penalty: 0,
           });
 
