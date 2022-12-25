@@ -62,15 +62,17 @@ export default class userController {
 
           return res.json({
             message: 'LOGIN SUCCESS',
+            Status_code: 200,
             Token: token,
           });
         }
       } else {
         return res.status(401).json({
-          msg: 'email not matched',
+          message: 'email not matched',
         });
       }
     } catch (error) {
+      console.log(error, 'Erro');
       return res.json({
         message: 'LOGIN FAILED',
       });

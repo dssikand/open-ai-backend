@@ -7,6 +7,7 @@ const openai = new OpenAIApi(configuration);
 
 export class AIController {
   static async AI(req: any, res: any) {
+    console.log(req.body);
     var Text = req.body.text;
     var SqlQuery = req.body.text;
     var NaturalLanguagetoPython = req.body.text;
@@ -29,9 +30,9 @@ export class AIController {
 
 
     try {
-      switch (req.body.text) {
+      switch (req.body.type) {
         // 1> Case for summarizing Text
-        case Text:
+        case 'Text':
           var textResponse = await openai.createCompletion({
             model: 'text-davinci-003',
             prompt: Text,
@@ -42,10 +43,10 @@ export class AIController {
             presence_penalty: 1,
           });
 
-          res.json({ data: textResponse.data });
+          res.json({ data: textResponse.data, status_code: 200 });
           break;
         // 2> Case for Generate Sql Query
-        case SqlQuery:
+        case 'SqlQuery':
           var sqlResponse = await openai.createCompletion({
             model: 'text-davinci-003',
             prompt: SqlQuery,
@@ -59,7 +60,7 @@ export class AIController {
           res.json({ data: sqlResponse.data });
           break;
         //3> Case for Natural Language to Python
-        case NaturalLanguagetoPython:
+        case 'NaturalLanguagetoPython':
           var NaturalLanguageToPython = await openai.createCompletion({
             model: 'code-davinci-003',
             prompt: NaturalLanguagetoPython,
@@ -70,10 +71,10 @@ export class AIController {
             presence_penalty: 0,
           });
 
-          res.json({ data: NaturalLanguageToPython.data });
+          res.json({ data: NaturalLanguageToPython.data, status_code: 200 });
           break;
         // 4> Case for Python Bug Fixer
-        case PythonBugfixer:
+        case 'PythonBugfixer':
           var pythonBugFix = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: PythonBugfixer,
@@ -85,10 +86,10 @@ export class AIController {
             stop: ['###'],
           });
 
-          res.json({ data: pythonBugFix.data });
+          res.json({ data: pythonBugFix.data, status_code: 200 });
           break;
         // 5> Case for Python Docstring
-        case PythonDocstring:
+        case 'PythonDocstring':
           var PythonDocString = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: PythonDocstring,
@@ -100,10 +101,10 @@ export class AIController {
             stop: ['###'],
           });
 
-          res.json({ data: PythonDocString.data });
+          res.json({ data: PythonDocString.data, status_code: 200 });
           break;
         // 6> Case for NaturalLanguagetoJava
-        case NaturalLanguagetoJava:
+        case 'NaturalLanguagetoJava':
           var NaturalLanguageToJava = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: NaturalLanguagetoJava,
@@ -114,11 +115,11 @@ export class AIController {
             presence_penalty: 0,
           });
 
-          res.json({ data: NaturalLanguageToJava.data });
+          res.json({ data: NaturalLanguageToJava.data, status_code: 200 });
           break;
 
         // 7> Case for Natural Language to Scala
-        case NaturalLanguagetoScala:
+        case 'NaturalLanguagetoScala':
           var NaturalLanguageToScala = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: NaturalLanguagetoScala,
@@ -129,11 +130,11 @@ export class AIController {
             presence_penalty: 0,
           });
 
-          res.json({ data: NaturalLanguageToScala.data });
+          res.json({ data: NaturalLanguageToScala.data, status_code: 200 });
           break;
 
         // 8> Case for Summarize for a 2nd grader
-        case Summarizefora2ndgrader:
+        case 'Summarizefora2ndgrader':
           var Summarizefora2ndGrader = await openai.createCompletion({
             model: 'text-davinci-003',
             prompt: Summarizefora2ndgrader,
@@ -144,10 +145,10 @@ export class AIController {
             presence_penalty: 0,
           });
 
-          res.json({ data: Summarizefora2ndGrader.data });
+          res.json({ data: Summarizefora2ndGrader.data, status_code: 200 });
           break;
         // 9> Case for SQL Translate
-        case SQLTranslate:
+        case 'SQLTranslate':
           var SQLTranslater = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: SQLTranslate,
@@ -156,13 +157,13 @@ export class AIController {
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
-            stop: ["#", ";"],
+            stop: ['#', ';'],
           });
 
-          res.json({ data: SQLTranslater.data });
+          res.json({ data: SQLTranslater.data, status_code: 200 });
           break;
         // 10>  Case forParse Unstructured Data
-        case ParseUnstructureddata:
+        case 'ParseUnstructureddata':
           var ParseUnstructuredData = await openai.createCompletion({
             model: 'text-davinci-003',
             prompt: ParseUnstructureddata,
@@ -173,10 +174,10 @@ export class AIController {
             presence_penalty: 0,
           });
 
-          res.json({ data: ParseUnstructuredData.data });
+          res.json({ data: ParseUnstructuredData.data, status_code: 200 });
           break;
         // 11> Case for Python to Natural Language
-        case PythontoNaturalLanguage:
+        case 'PythontoNaturalLanguage':
           var PythonToNaturalLanguage = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: PythontoNaturalLanguage,
@@ -187,10 +188,10 @@ export class AIController {
             presence_penalty: 0,
           });
 
-          res.json({ data: PythonToNaturalLanguage.data });
+          res.json({ data: PythonToNaturalLanguage.data, status_code: 200 });
           break;
         // 12> Case for Calculate Time Complexity
-        case CalculateTheTimeComplexity:
+        case 'CalculateTheTimeComplexity':
           var CalculateTimeComplexity = await openai.createCompletion({
             model: 'text-davinci-003',
             prompt: CalculateTheTimeComplexity,
@@ -202,10 +203,10 @@ export class AIController {
             stop: ['\n'],
           });
 
-          res.json({ data: CalculateTimeComplexity.data });
+          res.json({ data: CalculateTimeComplexity.data, status_code: 200 });
           break;
         // 13> Case for Translate Programming Languages
-        case TranslateProgrammingLanguage:
+        case 'TranslateProgrammingLanguage':
           var TranslateProgrammingLanguages = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: TranslateProgrammingLanguage,
@@ -217,10 +218,10 @@ export class AIController {
             stop: ['###'],
           });
 
-          res.json({ data: TranslateProgrammingLanguages.data });
+          res.json({ data: TranslateProgrammingLanguages.data, status_code: 200 });
           break;
         // 14> Case for convert from PySpark to SQL
-        case convertfromPySparktoSQL:
+        case 'convertfromPySparktoSQL':
           var convertfromPySparkToSQL = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: convertfromPySparktoSQL,
@@ -231,10 +232,10 @@ export class AIController {
             presence_penalty: 0,
           });
 
-          res.json({ data: convertfromPySparkToSQL.data });
+          res.json({ data: convertfromPySparkToSQL.data, status_code: 200 });
           break;
         // 15> Case for write JavaScripts
-        case writeJavaScript:
+        case 'writeJavaScript':
           var WriteJavaScript = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: writeJavaScript,
@@ -245,10 +246,10 @@ export class AIController {
             presence_penalty: 0,
           });
 
-          res.json({ data: WriteJavaScript.data });
+          res.json({ data: WriteJavaScript.data, status_code: 200 });
           break;
         // 16> Case for Explain code
-        case Explaincode:
+        case 'Explaincode':
           var ExplainCode = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: Explaincode,
@@ -260,24 +261,24 @@ export class AIController {
             stop: ['"""'],
           });
 
-          res.json({ data: ExplainCode.data });
+          res.json({ data: ExplainCode.data, status_code: 200 });
           break;
         // 17> Case for JavaScript to Python
-        case JavaScripttoPython:
+        case 'JavaScripttoPython':
           var JavaScriptToPython = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: JavaScripttoPython,
             temperature: 0,
             max_tokens: 256,
             top_p: 1,
-            frequency_penalty: 0, 
+            frequency_penalty: 0,
             presence_penalty: 0,
           });
 
-          res.json({ data: JavaScriptToPython.data });
+          res.json({ data: JavaScriptToPython.data, status_code: 200 });
           break;
         // 18>  Code for Q&A
-        case CodeForQandA:
+        case 'CodeForQandA':
           // start_sequence = "\nA:"
           // restart_sequence = "\n\nQ: "
           var CodeForqAnda = await openai.createCompletion({
@@ -291,10 +292,10 @@ export class AIController {
             stop: ['\n'],
           });
 
-          res.json({ data: CodeForqAnda.data });
+          res.json({ data: CodeForqAnda.data, status_code: 200 });
           break;
-          // 19> Case for JavaScript to Python
-        case CodeForPlayground:
+        // 19> Case for JavaScript to Python
+        case 'CodeForPlayground':
           var playGround = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: CodeForPlayground,
@@ -304,13 +305,14 @@ export class AIController {
             frequency_penalty: 0,
             presence_penalty: 0,
           });
-          res.json({ data: playGround.data });
+          res.json({ data: playGround.data, status_code: 200 });
           break;
       }
     } catch (error) {
       return res.json({
-        message: "openAPI isn't working",
+        message: 'Something Went wrong with Transcript',
         data: error,
+        status_code: 400,
       });
     }
   }
