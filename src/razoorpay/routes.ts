@@ -11,7 +11,7 @@ class RazorRouter {
 
   postRoutes() {
     this.router.post('/payment',razorpay.paymentGateway);
-    this.router.post('/verify', razorpay.verify);
+     this.router.post('/verify', razorpay.verify);
   }
 }
 export default new RazorRouter().router;

@@ -15,15 +15,13 @@ export default class userController {
           password: hash,
           firstName: firstName,
           lastName: lastName,
-          age: age,
-          address: address,
-          phone: phone,
         };
+
         const add = await new User(data).save();
-        return res.status(200).json({
+        return res.json({
           message: 'REGISTRATION SUCCESSFULL',
           Status_code: 200,
-          data: add,
+          data: data,
         });
       } catch (error) {
         console.log(error);
@@ -39,7 +37,7 @@ export default class userController {
   static async login(req: any, res: any) {
     try {
       let secret: any = process.env.JWT_SECRET_KEY;
-      console.log(secret)
+      console.log(secret,"megan");
       let user: any = await User.findOne({ email: req.body.email });
 
       if (user) {
@@ -58,7 +56,7 @@ export default class userController {
             },
             secret
           );
-          console.log(token);
+          console.log(token,"vinn");
 
           return res.json({
             message: 'LOGIN SUCCESS',

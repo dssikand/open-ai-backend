@@ -6,7 +6,7 @@ import bodyParser = require('body-parser');
 import UserRouter from './src/src/user/router';
 import AIRouter from './src/src/AI/routes';
 import RazorRouter from './src/razoorpay/routes';
-
+import  cors from "cors"
 export class Server {
   public app: express.Application = express();
 
@@ -32,6 +32,7 @@ export class Server {
   }
 
   Configurations() {
+    this.app.use(cors())
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
   }

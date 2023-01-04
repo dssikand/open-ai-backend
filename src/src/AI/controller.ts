@@ -27,14 +27,13 @@ export class AIController {
     var CodeForQandA = req.body.text;
     var CodeForPlayground = req.body.text;
 
-
     try {
       switch (req.body.text) {
         // 1> Case for summarizing Text
         case Text:
           var textResponse = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: Text,
+            prompt: `${Text}`,
             temperature: 0.7,
             max_tokens: 60,
             top_p: 1.0,
@@ -48,7 +47,7 @@ export class AIController {
         case SqlQuery:
           var sqlResponse = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: SqlQuery,
+            prompt: `### SQL tables, with their properties:\n#\n#\n### ${SqlQuery}\nSELECT`,
             temperature: 0.3,
             max_tokens: 60,
             top_p: 1.0,
@@ -62,7 +61,7 @@ export class AIController {
         case NaturalLanguagetoPython:
           var NaturalLanguageToPython = await openai.createCompletion({
             model: 'code-davinci-003',
-            prompt: NaturalLanguagetoPython,
+            prompt: ` ${NaturalLanguagetoPython}`,
             temperature: 0,
             max_tokens: 500,
             top_p: 1,
@@ -76,7 +75,7 @@ export class AIController {
         case PythonBugfixer:
           var pythonBugFix = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: PythonBugfixer,
+            prompt: ` "##### Fix bugs in the below function\n \n### Buggy Python\nEnter your question\n ${PythonBugfixer}\n### Fixed Python"`,
             temperature: 0,
             max_tokens: 182,
             top_p: 1,
@@ -91,7 +90,7 @@ export class AIController {
         case PythonDocstring:
           var PythonDocString = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: PythonDocstring,
+            prompt: `# Python 3.7\n \nEnter your question\n${PythonDocstring}\n# An elaborate, high quality docstring for the above function or code:\n\"\"\"`,
             temperature: 0,
             max_tokens: 150,
             top_p: 1,
@@ -106,7 +105,7 @@ export class AIController {
         case NaturalLanguagetoJava:
           var NaturalLanguageToJava = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: NaturalLanguagetoJava,
+            prompt: `/* Enter your question:${NaturalLanguagetoJava} */`,
             temperature: 0,
             max_tokens: 256,
             top_p: 1,
@@ -121,7 +120,7 @@ export class AIController {
         case NaturalLanguagetoScala:
           var NaturalLanguageToScala = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: NaturalLanguagetoScala,
+            prompt: `/* Enter your question:${NaturalLanguagetoScala} */`,
             temperature: 0,
             max_tokens: 256,
             top_p: 1,
@@ -136,7 +135,7 @@ export class AIController {
         case Summarizefora2ndgrader:
           var Summarizefora2ndGrader = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: Summarizefora2ndgrader,
+            prompt: `Summarize this paragraph and make it informative:\n\nEnter your question:${Summarizefora2ndgrader}`,
             temperature: 0.7,
             max_tokens: 356,
             top_p: 1,
@@ -150,13 +149,13 @@ export class AIController {
         case SQLTranslate:
           var SQLTranslater = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: SQLTranslate,
+            prompt: `### SQL tables, with their properties:\n#\n#\n### Enter your question:${SQLTranslate}\nSELECT`,
             temperature: 0,
             max_tokens: 150,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
-            stop: ["#", ";"],
+            stop: ['#', ';'],
           });
 
           res.json({ data: SQLTranslater.data });
@@ -165,7 +164,7 @@ export class AIController {
         case ParseUnstructureddata:
           var ParseUnstructuredData = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: ParseUnstructureddata,
+            prompt: `Parse the unstructured data from below paragraph:\n\nEnter your question:${ParseUnstructureddata}`,
             temperature: 0,
             max_tokens: 100,
             top_p: 1,
@@ -179,7 +178,7 @@ export class AIController {
         case PythontoNaturalLanguage:
           var PythonToNaturalLanguage = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: PythontoNaturalLanguage,
+            prompt: `# Python 3 \nEnter your question:${PythontoNaturalLanguage}\n\n# Explanation of what the code does\n\n#`,
             temperature: 0,
             max_tokens: 64,
             top_p: 1,
@@ -193,7 +192,7 @@ export class AIController {
         case CalculateTheTimeComplexity:
           var CalculateTimeComplexity = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: CalculateTheTimeComplexity,
+            prompt: `Enter your question:${CalculateTheTimeComplexity}\n\"\"\"\nThe time complexity of this function or code is`,
             temperature: 0,
             max_tokens: 64,
             top_p: 1,
@@ -208,7 +207,7 @@ export class AIController {
         case TranslateProgrammingLanguage:
           var TranslateProgrammingLanguages = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: TranslateProgrammingLanguage,
+            prompt: `Enter your question:${TranslateProgrammingLanguage}`,
             temperature: 0,
             max_tokens: 54,
             top_p: 1,
@@ -223,7 +222,7 @@ export class AIController {
         case convertfromPySparktoSQL:
           var convertfromPySparkToSQL = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: convertfromPySparktoSQL,
+            prompt: `Enter your question:${convertfromPySparktoSQL}\n\nConvert above the above PySpark code to SQL`,
             temperature: 0,
             max_tokens: 256,
             top_p: 1,
@@ -237,7 +236,7 @@ export class AIController {
         case writeJavaScript:
           var WriteJavaScript = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: writeJavaScript,
+            prompt: `/* Enter your question:${writeJavaScript} */`,
             temperature: 0,
             max_tokens: 256,
             top_p: 1,
@@ -251,7 +250,7 @@ export class AIController {
         case Explaincode:
           var ExplainCode = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: Explaincode,
+            prompt: `Enter your question:${Explaincode}\n\n\"\"\"\nHere's what the above code is doing:\n1.`,
             temperature: 0,
             max_tokens: 64,
             top_p: 1,
@@ -266,11 +265,11 @@ export class AIController {
         case JavaScripttoPython:
           var JavaScriptToPython = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: JavaScripttoPython,
+            prompt: `#JavaScript to Python:\nJavaScript: \nEnter your question:${JavaScripttoPython}\n\nPython:`,
             temperature: 0,
             max_tokens: 256,
             top_p: 1,
-            frequency_penalty: 0, 
+            frequency_penalty: 0,
             presence_penalty: 0,
           });
 
@@ -282,7 +281,7 @@ export class AIController {
           // restart_sequence = "\n\nQ: "
           var CodeForqAnda = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: CodeForQandA,
+            prompt: `Enter your question:${CodeForQandA}`,
             temperature: 0,
             max_tokens: 100,
             top_p: 1,
@@ -293,13 +292,13 @@ export class AIController {
 
           res.json({ data: CodeForqAnda.data });
           break;
-          // 19> Case for JavaScript to Python
+        // 19> Case for playground
         case CodeForPlayground:
           var playGround = await openai.createCompletion({
-            model: 'code-davinci-002',
-            prompt: CodeForPlayground,
-            temperature: 0,
-            max_tokens: 256,
+            model: 'code-davinci-003',
+            prompt: `Enter your question:${CodeForPlayground}`,
+            temperature: 0.7,
+            max_tokens: 500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,

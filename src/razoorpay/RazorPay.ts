@@ -1,5 +1,9 @@
 import Razorpay from 'razorpay';
-var instance = new Razorpay({ key_id: process.env.RAZOR_SECRET, key_secret: process.env.KEY_SECRET });
+var keySecret=process.env.KEY_SECRET
+var keyId=process.env.RAZOR_SECRET
+console.log(keySecret,keyId)
+
+var instance = new Razorpay({ key_id: keyId, key_secret: keySecret });
 import crypto from 'crypto';
 
 export class razorpay {
@@ -24,12 +28,13 @@ export class razorpay {
     }
   }
 
-  static async verify(req: any, res: any) {
+static async verify(req: any, res: any) {
+var Secret:any=process.env.KEY_SECRET
     try {
       const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
       const sign = razorpay_order_id + '|' + razorpay_payment_id;
       const expectedSign: any = crypto
-        .createHmac('sha256', process.env.KEY_SECRET)
+        .createHmac('sha256',Secret)
         .update(sign.toString())
         .digest('hex');
       console.log(expectedSign,"SignatureForVerification");
