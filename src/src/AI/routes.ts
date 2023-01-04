@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {AIController} from '../AI/controller';
 import { GlobalMiddleWare } from '../../middlewares/GlobalMiddleWares';
+import * as cors from 'cors';
 class AIRouter {
   public router: Router;
 
@@ -10,9 +11,8 @@ class AIRouter {
   }
 
   getRoutes() {
-   
-    this.router.post('/AI',GlobalMiddleWare.checkRequest, AIController.AI);
-
+    // this.router.use(cors.default());
+    this.router.post('/AI', GlobalMiddleWare.checkRequest, AIController.AI);
   }
 }
 export default new AIRouter().router;

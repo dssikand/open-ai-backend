@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 
 import express from 'express';
 import * as mongoose from 'mongoose';
+import cors from 'cors';
 import bodyParser = require('body-parser');
 import UserRouter from './src/src/user/router';
 import AIRouter from './src/src/AI/routes';
@@ -14,6 +15,7 @@ export class Server {
     dotenv.config();
 
     this.setConfigurations();
+
     this.setRoutes();
     this.error404Handler();
     this.HandleErrors();
@@ -25,23 +27,30 @@ export class Server {
   }
 
   ConnectMongoDB() {
-    const url: any = process.env.MONGODB_URL;
+    const url: any = process.env.DB_URL;
     mongoose.connect(url, () => {
       console.log(`database connected to ${url}`);
     });
   }
 
   Configurations() {
-    this.app.use(cors())
+    this.app.use(
+      cors({
+        origin: 'http://localhost:3000',
+        optionsSuccessStatus: 200,
+      })
+    );
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
   }
+  // setCors() {
 
+  // }
   setRoutes() {
+    // this.setCors();
     this.app.use('/user', UserRouter);
     this.app.use('/ai', AIRouter);
-    this.app.use('/razorpay',RazorRouter );
-
+    this.app.use('/razorpay', RazorRouter);
   }
   error404Handler() {
     this.app.use((req, res) => {

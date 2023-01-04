@@ -34,7 +34,7 @@ var Secret:any=process.env.KEY_SECRET
       const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
       const sign = razorpay_order_id + '|' + razorpay_payment_id;
       const expectedSign: any = crypto
-        .createHmac('sha256',Secret)
+        .createHmac('sha256', process.env.KEY_SECRET || '')
         .update(sign.toString())
         .digest('hex');
       console.log(expectedSign,"SignatureForVerification");

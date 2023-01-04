@@ -1,7 +1,7 @@
 import { validationResult } from 'express-validator';
 import * as jwt from 'jsonwebtoken';
 import { Error } from 'mongoose';
-
+import UserModel from '../src/user/model';
 export class GlobalMiddleWare {
   static checkError(req: any, res: any, next: any) {
     const error = validationResult(req);
@@ -16,22 +16,24 @@ export class GlobalMiddleWare {
     try {
       const secret: any = process.env.JWT_SECRET_KEY;
       const authHeader = req.headers.authorization;
+      console.log(req.headers);
       if (authHeader) {
         const token = await authHeader.split(' ')[1];
-        const verify = await jwt.verify(token, secret, (err: any, decoded: any) => {
+        const verify = await jwt.verify(token, secret, async (err: any, decoded: any) => {
           if (err) {
             next(err);
           } else if (!decoded) {
             req.errorStatus = 401;
             next(new Error('User Not Authorised'));
-          } else {  
+          } else {
             const user = (req.user = decoded);
             console.log(user);
             if (!user.requestBalance) {
               next(new Error('balance is closed'));
+            } else {
+              await UserModel.updateOne({ _id: decoded._id }, { $inc: { requestBalance: -1 } });
             }
-            next()
-            
+            next();
           }
         });
       } else {
