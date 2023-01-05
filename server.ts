@@ -35,7 +35,7 @@ export class Server {
   Configurations() {
     this.app.use(
       cors({
-        origin: 'http://localhost:3000',
+        origin: process.env.ENV === 'dev' ? 'http://localhost:3000' : 'https://open-ai-backend.onrender.com',
         optionsSuccessStatus: 200,
       })
     );
