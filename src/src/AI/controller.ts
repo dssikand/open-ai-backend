@@ -61,8 +61,8 @@ export class AIController {
         //3> Case for Natural Language to Python
         case 'NaturalLanguagetoPython':
           var NaturalLanguageToPython = await openai.createCompletion({
-            model: 'code-davinci-003',
-            prompt: ` ${NaturalLanguagetoPython}`,
+            model: 'code-davinci-002',
+            prompt: `\"\"\"\n${NaturalLanguagetoPython}\n\"\"\""`,
             temperature: 0,
             max_tokens: 500,
             top_p: 1,
@@ -308,6 +308,7 @@ export class AIController {
           break;
       }
     } catch (error) {
+      console.log(error, 'erro');
       return res.json({
         message: 'Something Went wrong with Transcript',
         data: error,
