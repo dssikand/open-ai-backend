@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "dev": "nodemon -r dotenv/config  index.ts"
+    "start": "nodemon -r dotenv/config  index.ts"
   },
   "repository": {
     "type": "git",
