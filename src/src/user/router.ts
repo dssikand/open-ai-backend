@@ -14,6 +14,7 @@ class UserRouter {
     this.router.use(cors.default());
     this.router.post('/register', userController.register);
     this.router.post('/login', userController.login);
+    this.router.get('/currentuser', userController.getCurrentUser);
   }
 }
 export default new UserRouter().router;

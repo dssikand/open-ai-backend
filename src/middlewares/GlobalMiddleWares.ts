@@ -31,7 +31,9 @@ export class GlobalMiddleWare {
             if (!user.requestBalance) {
               next(new Error('balance is closed'));
             } else {
-              await UserModel.updateOne({ _id: decoded._id }, { $inc: { requestBalance: -1 } });
+              if (user.requestBalance > 0) {
+                await UserModel.updateOne({ _id: decoded._id }, { $inc: { requestBalance: -1 } });
+              }
             }
             next();
           }

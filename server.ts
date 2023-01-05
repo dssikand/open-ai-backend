@@ -7,7 +7,6 @@ import bodyParser = require('body-parser');
 import UserRouter from './src/src/user/router';
 import AIRouter from './src/src/AI/routes';
 import RazorRouter from './src/razoorpay/routes';
-import  cors from "cors"
 export class Server {
   public app: express.Application = express();
 
@@ -27,7 +26,7 @@ export class Server {
   }
 
   ConnectMongoDB() {
-    const url: any = process.env.DB_URL;
+    const url: any = process.env.MONGODB_URL;
     mongoose.connect(url, () => {
       console.log(`database connected to ${url}`);
     });

@@ -26,18 +26,22 @@ export default class userController {
       } catch (error) {
         console.log(error);
         return res.json({
+          Status_code: 400,
           message: 'REGISTRATION FAILED',
         });
       }
     } else {
-      res.send({ message: 'User Already exists with same email you entered' });
+      return res.json({
+        Status_code: 400,
+        message: 'User already exist',
+      });
     }
   }
 
   static async login(req: any, res: any) {
     try {
       let secret: any = process.env.JWT_SECRET_KEY;
-      console.log(secret,"megan");
+      console.log(secret, 'megan');
       let user: any = await User.findOne({ email: req.body.email });
 
       if (user) {
@@ -56,7 +60,7 @@ export default class userController {
             },
             secret
           );
-          console.log(token,"vinn");
+          console.log(token, 'vinn');
 
           return res.json({
             message: 'LOGIN SUCCESS',
@@ -96,6 +100,20 @@ export default class userController {
       return res.json({
         message: 'Update FAILED',
         data: error,
+      });
+    }
+  }
+  static async getCurrentUser(req: any, res: any) {
+    try {
+      const authHeader = req.headers.authorization;
+      const decodeduser: any = Jwt.decode(authHeader);
+      let user = await User.findOne({ _id: decodeduser._id });
+
+      res.json({ message: user, Status_code: 200 });
+    } catch (error) {
+      return res.json({
+        message: error,
+        Status_code: 400,
       });
     }
   }

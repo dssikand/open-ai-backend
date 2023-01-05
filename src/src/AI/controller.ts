@@ -48,7 +48,7 @@ export class AIController {
         case 'SqlQuery':
           var sqlResponse = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: `### SQL tables, with their properties:\n#\n#\n### ${SqlQuery}\nSELECT`,
+            prompt: `### SQL tables, with their properties:\n#\n#\n### ${SqlQuery}\n`,
             temperature: 0.3,
             max_tokens: 60,
             top_p: 1.0,
