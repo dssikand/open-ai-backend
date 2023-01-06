@@ -56,13 +56,13 @@ export class AIController {
             presence_penalty: 0.0,
           });
 
-          res.json({ data: sqlResponse.data });
+          res.json({ data: sqlResponse.data, status_code: 200 });
           break;
         //3> Case for Natural Language to Python
         case 'NaturalLanguagetoPython':
           var NaturalLanguageToPython = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `\"\"\"\n${NaturalLanguagetoPython}\n\"\"\""`,
+            prompt: `\"\"\"\n${NaturalLanguagetoPython}\n\"\"\"`,
             temperature: 0,
             max_tokens: 500,
             top_p: 1,
@@ -237,7 +237,7 @@ export class AIController {
         case 'writeJavaScript':
           var WriteJavaScript = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `/*${writeJavaScript} */`,
+            prompt: `${writeJavaScript}`,
             temperature: 0,
             max_tokens: 256,
             top_p: 1,
