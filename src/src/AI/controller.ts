@@ -22,6 +22,7 @@ export class AIController {
     var CalculateTheTimeComplexity = req.body.text;
     var TranslateProgrammingLanguage = req.body.text;
     var convertfromPySparktoSQL = req.body.text;
+    var convertfromPandastoPySpark = req.body.text;
     var writeJavaScript = req.body.text;
     var Explaincode = req.body.text;
     var JavaScripttoPython = req.body.text;
@@ -189,6 +190,19 @@ export class AIController {
 
           res.json({ data: PythonToNaturalLanguage.data, status_code: 200 });
           break;
+        case 'AptitudeAnswers':
+          var AptitudeAnswers = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nAnswer the above question with clear explanation\n\n`,
+            temperature: 0.7,
+            max_tokens: 2000,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+
+          res.json({ data: AptitudeAnswers.data, status_code: 200 });
+          break;
         // 12> Case for Calculate Time Complexity
         case 'CalculateTheTimeComplexity':
           var CalculateTimeComplexity = await openai.createCompletion({
@@ -233,6 +247,28 @@ export class AIController {
 
           res.json({ data: convertfromPySparkToSQL.data, status_code: 200 });
           break;
+        case 'convertfromPandastoPySpark':
+          var convertfromPandastoSpark = await openai.createCompletion({
+            model: 'code-davinci-002',
+            prompt: `${convertfromPandastoPySpark}\n\nConvert above the above Pandas code to PySpark`,
+            temperature: 0,
+            max_tokens: 256,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: convertfromPandastoSpark.data, status_code: 200 });
+        case 'ParseUnstructureddata':
+          var ParseUnstructuredData = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nParse the unstructured data from above paragraph to structured data:`,
+            temperature: 0,
+            max_tokens: 400,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: ParseUnstructuredData.data, status_code: 200 });
         // 15> Case for write JavaScripts
         case 'writeJavaScript':
           var WriteJavaScript = await openai.createCompletion({
@@ -253,7 +289,7 @@ export class AIController {
             model: 'code-davinci-002',
             prompt: `${Explaincode}\n\n\"\"\"\nHere's what the above code is doing:\n1.`,
             temperature: 0,
-            max_tokens: 64,
+            max_tokens: 150,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -262,7 +298,196 @@ export class AIController {
 
           res.json({ data: ExplainCode.data, status_code: 200 });
           break;
+        case 'MarketResearch':
+          var MarketResearch = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nExtract some insights from the above text i.e. make some Market Research`,
+            temperature: 0.7,
+            max_tokens: 256,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: MarketResearch.data, status_code: 200 });
         // 17> Case for JavaScript to Python
+        case 'MarketResearchOnlyNumbers':
+          var MarketResearchOnlyNumbers = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nExtract some insights from the above text i.e. make some Market Research (Only get the numbers)`,
+            temperature: 0.7,
+            max_tokens: 256,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: MarketResearchOnlyNumbers.data, status_code: 200 });
+        case 'ContentWriter':
+          var ContentWriter = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nWrite or generate a content for above input sentence or paragraph:`,
+            temperature: 0.7,
+            max_tokens: 2000,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: ContentWriter.data, status_code: 200 });
+        case 'PlagiarismRemover':
+          var PlagiarismRemover = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nRemove the plagiarism for the above sentence or paragraph:`,
+            temperature: 0.7,
+            max_tokens: 2000,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: PlagiarismRemover.data, status_code: 200 });
+        case 'AptitudeAnswers':
+          var AptitudeAnswers = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nAnswer the above question with clear explanation\n\n`,
+            temperature: 0.7,
+            max_tokens: 2000,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: AptitudeAnswers.data, status_code: 200 });
+        case 'ExtractImportantWords':
+          var ExtractImportantWords = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nExtract the Organizations, Quantities, Monetary values, Percentages, and more. People’s names, People Designation, Salary, Company names, Geographic locations (Both physical and political), Product names, Dates and times, Amounts of money, Names of events and other entities from the above sentence or paragraph and classify into their respective entity types.\n\n`,
+            temperature: 0.7,
+            max_tokens: 2000,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: ExtractImportantWords.data, status_code: 200 });
+        case 'GetExcelFormula':
+          var GetExcelFormula = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nWrite excel formula for the above question\n\n`,
+            temperature: 0.7,
+            max_tokens: 2000,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: GetExcelFormula.data, status_code: 200 });
+        case 'MCQGeneration':
+          var MCQGeneration = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nGenerate 5 Multiple Choice Questions from the above sentence or paragraph\n\n`,
+            temperature: 0.73,
+            max_tokens: 2192,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: MCQGeneration.data, status_code: 200 });
+
+        case 'QuestionGeneration':
+          var QuestionGeneration = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nGenerate 5 Fill in the blank Questions (Those must be tought to answer) from the above sentence or paragraph\n\n`,
+            temperature: 0.73,
+            max_tokens: 2192,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: QuestionGeneration.data, status_code: 200 });
+
+        case 'QuestionAndAnswering':
+          var QuestionAndAnswering = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nTake reference from the above sentence or paragraph and give answers for the above question asked\n\n`,
+            temperature: 0.73,
+            max_tokens: 2192,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: QuestionAndAnswering.data, status_code: 200 });
+        case 'EssayWriting':
+          var EssayWriting = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nWrite an 1500 word essay on the above given topic or the question.\n\n`,
+            temperature: 0.73,
+            max_tokens: 2192,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: EssayWriting.data, status_code: 200 });
+        case 'VBACode':
+          var VBACode = await openai.createCompletion({
+            model: 'text-davinci-003',
+            prompt: `${req.body.text}\n\nWrite a VBA code for above question\n\n`,
+            temperature: 0.7,
+            max_tokens: 500,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+          });
+          res.json({ data: VBACode.data, status_code: 200 });
+        case 'postgresql':
+          var sqlResponse = await openai.createCompletion({
+            model: 'code-davinci-002',
+            prompt: `### Postgres SQL tables, with their properties:\n#\n#\n### ${req.body.text}\nSELECT`,
+            temperature: 0.3,
+            max_tokens: 150,
+            top_p: 1.0,
+            frequency_penalty: 0.0,
+            presence_penalty: 0.0,
+          });
+          res.json({ data: sqlResponse.data, status_code: 200 });
+        case 'oraclesql':
+          var sqlResponse = await openai.createCompletion({
+            model: 'code-davinci-002',
+            prompt: `### ORACLE SQL tables, with their properties:\n#\n#\n### ${req.body.text}\nSELECT`,
+            temperature: 0.3,
+            max_tokens: 150,
+            top_p: 1.0,
+            frequency_penalty: 0.0,
+            presence_penalty: 0.0,
+          });
+          res.json({ data: sqlResponse.data, status_code: 200 });
+        case 'anisql':
+          var sqlResponse = await openai.createCompletion({
+            model: 'code-davinci-002',
+            prompt: `### ANSI SQL tables, with their properties:\n#\n#\n### ${req.body.text}\nSELECT`,
+            temperature: 0.3,
+            max_tokens: 150,
+            top_p: 1.0,
+            frequency_penalty: 0.0,
+            presence_penalty: 0.0,
+          });
+          res.json({ data: sqlResponse.data, status_code: 200 });
+        case 'storeprocedure':
+          var sqlResponse = await openai.createCompletion({
+            model: 'code-davinci-002',
+            prompt: `### SQL tables, with their properties:\n#\n#\n### ${req.body.text}\nCREATE PROCEDURE`,
+            temperature: 0.3,
+            max_tokens: 150,
+            top_p: 1.0,
+            frequency_penalty: 0.0,
+            presence_penalty: 0.0,
+          });
+          res.json({ data: sqlResponse.data, status_code: 200 });
+        case 'view':
+          var sqlResponse = await openai.createCompletion({
+            model: 'code-davinci-002',
+            prompt: `### SQL tables, with their properties:\n#\n#\n### ${req.body.text}\nCREATE VIEW`,
+            temperature: 0.3,
+            max_tokens: 150,
+            top_p: 1.0,
+            frequency_penalty: 0.0,
+            presence_penalty: 0.0,
+          });
+          res.json({ data: sqlResponse.data, status_code: 200 });
         case 'JavaScripttoPython':
           var JavaScriptToPython = await openai.createCompletion({
             model: 'code-davinci-002',
