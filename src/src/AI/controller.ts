@@ -63,9 +63,9 @@ export class AIController {
         case 'NaturalLanguagetoPython':
           var NaturalLanguageToPython = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `\"\"\"\n${NaturalLanguagetoPython}\n\"\"\"\nWrite the Python code for above question\n`,
+            prompt: `Write a Python code for below question\n\"\"\"\n${NaturalLanguagetoPython}\n\"\"\"\``,
             temperature: 0,
-            max_tokens: 800,
+            max_tokens: 1000,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -106,9 +106,9 @@ export class AIController {
         case 'NaturalLanguagetoJava':
           var NaturalLanguageToJava = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `/*${NaturalLanguagetoJava} */\nWrite the Java code for above question\n`,
+            prompt: `Write a Java code for below question\n/*${NaturalLanguagetoJava}: */`,
             temperature: 0,
-            max_tokens: 700,
+            max_tokens: 1000,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -121,9 +121,9 @@ export class AIController {
         case 'NaturalLanguagetoScala':
           var NaturalLanguageToScala = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `/*${NaturalLanguagetoScala} */\nWrite the Scala code for above question\n`,
+            prompt: `Write a Scala code for below question\n/*${NaturalLanguagetoScala}: */`,
             temperature: 0,
-            max_tokens: 700,
+            max_tokens: 1000,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -160,20 +160,6 @@ export class AIController {
           });
 
           res.json({ data: SQLTranslater.data, status_code: 200 });
-          break;
-        // 10>  Case forParse Unstructured Data
-        case 'ParseUnstructureddata':
-          var ParseUnstructuredData = await openai.createCompletion({
-            model: 'text-davinci-003',
-            prompt: `Parse the unstructured data from below paragraph:\n\n${ParseUnstructureddata}`,
-            temperature: 0,
-            max_tokens: 100,
-            top_p: 1,
-            frequency_penalty: 0,
-            presence_penalty: 0,
-          });
-
-          res.json({ data: ParseUnstructuredData.data, status_code: 200 });
           break;
         // 11> Case for Python to Natural Language
 
@@ -275,9 +261,9 @@ export class AIController {
         case 'writeJavaScript':
           var WriteJavaScript = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `/*${writeJavaScript} */\nWrite the JavaScript code for above question\n`,
+            prompt: `Write a JavaScript code for below question\n/*${writeJavaScript}: */`,
             temperature: 0,
-            max_tokens: 500,
+            max_tokens: 1000,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -510,7 +496,7 @@ export class AIController {
             model: 'code-davinci-002',
             prompt: `#JavaScript to Python:\nJavaScript: \n${JavaScripttoPython}\n\nPython:`,
             temperature: 0,
-            max_tokens: 500,
+            max_tokens: 1000,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -536,7 +522,7 @@ export class AIController {
           res.json({ data: CodeForqAnda.data, status_code: 200 });
           break;
         // 19> Case for playground
-        case CodeForPlayground:
+        case 'CodeForPlayground':
           var playGround = await openai.createCompletion({
             model: 'code-davinci-003',
             prompt: `${CodeForPlayground}`,
