@@ -63,7 +63,7 @@ export class AIController {
         case 'NaturalLanguagetoPython':
           var NaturalLanguageToPython = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `Write a Python code for below question\n\"\"\"\n${NaturalLanguagetoPython}\n\"\"\"\ in java`,
+            prompt: `\"\"\"\n${NaturalLanguagetoPython}\n\"\"\"\nWrite a Python code for above question\n`,
             temperature: 0,
             max_tokens: 750,
             top_p: 1,
@@ -106,7 +106,7 @@ export class AIController {
         case 'NaturalLanguagetoJava':
           var NaturalLanguageToJava = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `Write a Java code for below question\n/*${NaturalLanguagetoJava}: */\n in java`,
+            prompt: `/*${NaturalLanguagetoJava}: */\nWrite a Java code for above question\n`,
             temperature: 0,
             max_tokens: 750,
             top_p: 1,
@@ -121,7 +121,7 @@ export class AIController {
         case 'NaturalLanguagetoScala':
           var NaturalLanguageToScala = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `Write a Scala code for below question\n/*${NaturalLanguagetoScala}: */\n in scala`,
+            prompt: `/*${NaturalLanguagetoScala}: */\nWrite a Scala code for above question\n`,
             temperature: 0,
             max_tokens: 750,
             top_p: 1,
@@ -261,7 +261,7 @@ export class AIController {
         case 'writeJavaScript':
           var WriteJavaScript = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `Write a JavaScript code for below question\n/*${writeJavaScript}: */\n in Javascript`,
+            prompt: `/*${writeJavaScript}: */\nWrite a JavaScript code for above question\n`,
             temperature: 0,
             max_tokens: 750,
             top_p: 1,
