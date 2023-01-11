@@ -63,9 +63,9 @@ export class AIController {
         case 'NaturalLanguagetoPython':
           var NaturalLanguageToPython = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `Write a Python code for below question\n\"\"\"\n${NaturalLanguagetoPython}\n\"\"\"\``,
+            prompt: `Write a Python code for below question\n\"\"\"\n${NaturalLanguagetoPython}\n\"\"\"\ in java`,
             temperature: 0,
-            max_tokens: 1000,
+            max_tokens: 750,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -106,9 +106,9 @@ export class AIController {
         case 'NaturalLanguagetoJava':
           var NaturalLanguageToJava = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `Write a Java code for below question\n/*${NaturalLanguagetoJava}: */`,
+            prompt: `Write a Java code for below question\n/*${NaturalLanguagetoJava}: */\n in java`,
             temperature: 0,
-            max_tokens: 1000,
+            max_tokens: 750,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -121,9 +121,9 @@ export class AIController {
         case 'NaturalLanguagetoScala':
           var NaturalLanguageToScala = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `Write a Scala code for below question\n/*${NaturalLanguagetoScala}: */`,
+            prompt: `Write a Scala code for below question\n/*${NaturalLanguagetoScala}: */\n in scala`,
             temperature: 0,
-            max_tokens: 1000,
+            max_tokens: 750,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -261,9 +261,9 @@ export class AIController {
         case 'writeJavaScript':
           var WriteJavaScript = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `Write a JavaScript code for below question\n/*${writeJavaScript}: */`,
+            prompt: `Write a JavaScript code for below question\n/*${writeJavaScript}: */\n in Javascript`,
             temperature: 0,
-            max_tokens: 1000,
+            max_tokens: 750,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -496,7 +496,7 @@ export class AIController {
             model: 'code-davinci-002',
             prompt: `#JavaScript to Python:\nJavaScript: \n${JavaScripttoPython}\n\nPython:`,
             temperature: 0,
-            max_tokens: 1000,
+            max_tokens: 500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
