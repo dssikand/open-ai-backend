@@ -47,9 +47,9 @@ export class Server {
   // }
   setRoutes() {
     // this.setCors();
-    this.app.use('/user', UserRouter);
-    this.app.use('/ai', AIRouter);
-    this.app.use('/razorpay', RazorRouter);
+    this.app.use('/api/user', UserRouter);
+    this.app.use('/api/ai', AIRouter);
+    this.app.use('/api/razorpay', RazorRouter);
   }
   error404Handler() {
     this.app.use((req, res) => {
