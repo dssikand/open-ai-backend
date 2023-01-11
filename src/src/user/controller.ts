@@ -90,16 +90,44 @@ export default class userController {
         res.json({ message: 'user not found' });
       } else {
         const data = await User.updateOne({ _id: _id }, { ...req.body });
-        console.log(data, 'vinay bawa');
         return res.json({
           message: 'Update SUCCESS',
           data: data,
+          status_code: 200,
         });
       }
     } catch (error) {
       return res.json({
         message: 'Update FAILED',
         data: error,
+        status_code: 400
+      });
+    }
+  }
+  static async updatePassword(req: any, res: any) {
+    try {
+      const _id = req.params.id;
+      const { oldpassword,password } = req.body;
+      let user: any = await User.findOne({ _id });
+    
+      let result = await Bcrypt.compare(oldpassword, user.password);
+      if (!result) {
+        res.json({ message: 'Incorrect previous password',status_code: 400 });
+      } else {
+        const hash = await Bcrypt.hash(password, 10);
+        console.log(hash)
+        const data = await User.updateOne({ _id: _id }, { password: hash });
+        return res.json({
+          message: 'Update Password successfully',
+          data: data,
+          status_code: 200
+        });
+      }
+    } catch (error) {
+      return res.json({
+        message: 'Update FAILED',
+        data: error,
+        status_code: 400,
       });
     }
   }

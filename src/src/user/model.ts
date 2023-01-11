@@ -9,8 +9,9 @@ const registerSchema = new mongoose.Schema({
   phone: { type: String },
   password: { type: String },
   address: { type: String },
-  requestBalance: {type: Number,default: 5},
+  requestBalance: { type: Number, default: 5 },
   role: { type: String, default: '', enum: ['', 'Guest', 'SuperAdmin', 'Admin', 'Employee', 'Manager'] },
+  plan: { type: String },
   image: {
     type: Object,
   },

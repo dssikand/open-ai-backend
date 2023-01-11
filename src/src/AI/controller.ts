@@ -63,9 +63,9 @@ export class AIController {
         case 'NaturalLanguagetoPython':
           var NaturalLanguageToPython = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `\"\"\"\n${NaturalLanguagetoPython}\n\"\"\"`,
+            prompt: `\"\"\"\n${NaturalLanguagetoPython}\n\"\"\"\nWrite the Python code for above question\n`,
             temperature: 0,
-            max_tokens: 500,
+            max_tokens: 800,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -79,13 +79,12 @@ export class AIController {
             model: 'code-davinci-002',
             prompt: ` "##### Fix bugs in the below function\n \n### Buggy Python\n\n ${PythonBugfixer}\n### Fixed Python"`,
             temperature: 0,
-            max_tokens: 182,
+            max_tokens: 300,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
             stop: ['###'],
           });
-
           res.json({ data: pythonBugFix.data, status_code: 200 });
           break;
         // 5> Case for Python Docstring
@@ -107,9 +106,9 @@ export class AIController {
         case 'NaturalLanguagetoJava':
           var NaturalLanguageToJava = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `/*${NaturalLanguagetoJava} */`,
+            prompt: `/*${NaturalLanguagetoJava} */\nWrite the Java code for above question\n`,
             temperature: 0,
-            max_tokens: 256,
+            max_tokens: 700,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -122,9 +121,9 @@ export class AIController {
         case 'NaturalLanguagetoScala':
           var NaturalLanguageToScala = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `/*${NaturalLanguagetoScala} */`,
+            prompt: `/*${NaturalLanguagetoScala} */\nWrite the Scala code for above question\n`,
             temperature: 0,
-            max_tokens: 256,
+            max_tokens: 700,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -177,12 +176,13 @@ export class AIController {
           res.json({ data: ParseUnstructuredData.data, status_code: 200 });
           break;
         // 11> Case for Python to Natural Language
+
         case 'PythontoNaturalLanguage':
           var PythonToNaturalLanguage = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: `# Python 3 \n${PythontoNaturalLanguage}\n\n# Explanation of what the code does\n\n#`,
             temperature: 0,
-            max_tokens: 64,
+            max_tokens: 500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -258,24 +258,26 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: convertfromPandastoSpark.data, status_code: 200 });
+          break;
         case 'ParseUnstructureddata':
           var ParseUnstructuredData = await openai.createCompletion({
             model: 'text-davinci-003',
             prompt: `${req.body.text}\n\nParse the unstructured data from above paragraph to structured data:`,
             temperature: 0,
-            max_tokens: 400,
+            max_tokens: 1500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
           });
           res.json({ data: ParseUnstructuredData.data, status_code: 200 });
+          break;
         // 15> Case for write JavaScripts
         case 'writeJavaScript':
           var WriteJavaScript = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `${writeJavaScript}`,
+            prompt: `/*${writeJavaScript} */\nWrite the JavaScript code for above question\n`,
             temperature: 0,
-            max_tokens: 256,
+            max_tokens: 500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -289,7 +291,7 @@ export class AIController {
             model: 'code-davinci-002',
             prompt: `${Explaincode}\n\n\"\"\"\nHere's what the above code is doing:\n1.`,
             temperature: 0,
-            max_tokens: 150,
+            max_tokens: 500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
@@ -309,6 +311,7 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: MarketResearch.data, status_code: 200 });
+          break;
         // 17> Case for JavaScript to Python
         case 'MarketResearchOnlyNumbers':
           var MarketResearchOnlyNumbers = await openai.createCompletion({
@@ -321,10 +324,11 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: MarketResearchOnlyNumbers.data, status_code: 200 });
+          break;
         case 'ContentWriter':
           var ContentWriter = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: `${req.body.text}\n\nWrite or generate a content for above input sentence or paragraph:`,
+            prompt: `${req.body.text}\n\nWrite or generate a 1500 word content for above input sentence or paragraph:`,
             temperature: 0.7,
             max_tokens: 2000,
             top_p: 1,
@@ -332,6 +336,7 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: ContentWriter.data, status_code: 200 });
+          break;
         case 'PlagiarismRemover':
           var PlagiarismRemover = await openai.createCompletion({
             model: 'text-davinci-003',
@@ -343,6 +348,7 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: PlagiarismRemover.data, status_code: 200 });
+          break;
         case 'AptitudeAnswers':
           var AptitudeAnswers = await openai.createCompletion({
             model: 'text-davinci-003',
@@ -354,6 +360,7 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: AptitudeAnswers.data, status_code: 200 });
+          break;
         case 'ExtractImportantWords':
           var ExtractImportantWords = await openai.createCompletion({
             model: 'text-davinci-003',
@@ -365,6 +372,7 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: ExtractImportantWords.data, status_code: 200 });
+          break;
         case 'GetExcelFormula':
           var GetExcelFormula = await openai.createCompletion({
             model: 'text-davinci-003',
@@ -376,6 +384,7 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: GetExcelFormula.data, status_code: 200 });
+          break;
         case 'MCQGeneration':
           var MCQGeneration = await openai.createCompletion({
             model: 'text-davinci-003',
@@ -387,7 +396,7 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: MCQGeneration.data, status_code: 200 });
-
+          break;
         case 'QuestionGeneration':
           var QuestionGeneration = await openai.createCompletion({
             model: 'text-davinci-003',
@@ -399,7 +408,7 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: QuestionGeneration.data, status_code: 200 });
-
+          break;
         case 'QuestionAndAnswering':
           var QuestionAndAnswering = await openai.createCompletion({
             model: 'text-davinci-003',
@@ -411,6 +420,7 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: QuestionAndAnswering.data, status_code: 200 });
+          break;
         case 'EssayWriting':
           var EssayWriting = await openai.createCompletion({
             model: 'text-davinci-003',
@@ -422,6 +432,7 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: EssayWriting.data, status_code: 200 });
+          break;
         case 'VBACode':
           var VBACode = await openai.createCompletion({
             model: 'text-davinci-003',
@@ -433,6 +444,7 @@ export class AIController {
             presence_penalty: 0,
           });
           res.json({ data: VBACode.data, status_code: 200 });
+          break;
         case 'postgresql':
           var sqlResponse = await openai.createCompletion({
             model: 'code-davinci-002',
@@ -444,6 +456,7 @@ export class AIController {
             presence_penalty: 0.0,
           });
           res.json({ data: sqlResponse.data, status_code: 200 });
+          break;
         case 'oraclesql':
           var sqlResponse = await openai.createCompletion({
             model: 'code-davinci-002',
@@ -455,6 +468,7 @@ export class AIController {
             presence_penalty: 0.0,
           });
           res.json({ data: sqlResponse.data, status_code: 200 });
+          break;
         case 'anisql':
           var sqlResponse = await openai.createCompletion({
             model: 'code-davinci-002',
@@ -466,6 +480,7 @@ export class AIController {
             presence_penalty: 0.0,
           });
           res.json({ data: sqlResponse.data, status_code: 200 });
+          break;
         case 'storeprocedure':
           var sqlResponse = await openai.createCompletion({
             model: 'code-davinci-002',
@@ -477,6 +492,7 @@ export class AIController {
             presence_penalty: 0.0,
           });
           res.json({ data: sqlResponse.data, status_code: 200 });
+          break;
         case 'view':
           var sqlResponse = await openai.createCompletion({
             model: 'code-davinci-002',
@@ -488,12 +504,13 @@ export class AIController {
             presence_penalty: 0.0,
           });
           res.json({ data: sqlResponse.data, status_code: 200 });
+          break;
         case 'JavaScripttoPython':
           var JavaScriptToPython = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: `#JavaScript to Python:\nJavaScript: \n${JavaScripttoPython}\n\nPython:`,
             temperature: 0,
-            max_tokens: 256,
+            max_tokens: 500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
