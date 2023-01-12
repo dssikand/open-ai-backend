@@ -435,11 +435,12 @@ export class AIController {
           var sqlResponse = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: `### Postgres SQL tables, with their properties:\n#\n#\n### ${req.body.text}\nSELECT`,
-            temperature: 0.3,
-            max_tokens: 150,
+            temperature: 0,
+            max_tokens: 250,
             top_p: 1.0,
-            frequency_penalty: 0.0,
-            presence_penalty: 0.0,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+            stop: ['#', ';'],
           });
           res.json({ data: sqlResponse.data, status_code: 200 });
           break;
@@ -447,11 +448,12 @@ export class AIController {
           var sqlResponse = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: `### ORACLE SQL tables, with their properties:\n#\n#\n### ${req.body.text}\nSELECT`,
-            temperature: 0.3,
-            max_tokens: 150,
+            temperature: 0,
+            max_tokens: 250,
             top_p: 1.0,
-            frequency_penalty: 0.0,
-            presence_penalty: 0.0,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+            stop: ['#', ';'],
           });
           res.json({ data: sqlResponse.data, status_code: 200 });
           break;
@@ -459,11 +461,12 @@ export class AIController {
           var sqlResponse = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: `### ANSI SQL tables, with their properties:\n#\n#\n### ${req.body.text}\nSELECT`,
-            temperature: 0.3,
-            max_tokens: 150,
+            temperature: 0,
+            max_tokens: 250,
             top_p: 1.0,
-            frequency_penalty: 0.0,
-            presence_penalty: 0.0,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+            stop: ['#', ';'],
           });
           res.json({ data: sqlResponse.data, status_code: 200 });
           break;
@@ -471,11 +474,12 @@ export class AIController {
           var sqlResponse = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: `### SQL tables, with their properties:\n#\n#\n### ${req.body.text}\nCREATE PROCEDURE`,
-            temperature: 0.3,
-            max_tokens: 150,
+            temperature: 0,
+            max_tokens: 250,
             top_p: 1.0,
-            frequency_penalty: 0.0,
-            presence_penalty: 0.0,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+            stop: ['#', ';'],
           });
           res.json({ data: sqlResponse.data, status_code: 200 });
           break;
@@ -483,11 +487,12 @@ export class AIController {
           var sqlResponse = await openai.createCompletion({
             model: 'code-davinci-002',
             prompt: `### SQL tables, with their properties:\n#\n#\n### ${req.body.text}\nCREATE VIEW`,
-            temperature: 0.3,
-            max_tokens: 150,
+            temperature: 0,
+            max_tokens: 250,
             top_p: 1.0,
-            frequency_penalty: 0.0,
-            presence_penalty: 0.0,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+            stop: ['#', ';'],
           });
           res.json({ data: sqlResponse.data, status_code: 200 });
           break;
