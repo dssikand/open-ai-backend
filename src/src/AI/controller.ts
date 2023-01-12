@@ -261,7 +261,7 @@ export class AIController {
         case 'writeJavaScript':
           var WriteJavaScript = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `/*${writeJavaScript}: */\nWrite a JavaScript code for above question\n`,
+            prompt: `${writeJavaScript}\nWrite a JavaScript code for above question`,
             temperature: 0,
             max_tokens: 750,
             top_p: 1,
