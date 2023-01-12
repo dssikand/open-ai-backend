@@ -529,10 +529,10 @@ export class AIController {
         // 19> Case for playground
         case 'CodeForPlayground':
           var playGround = await openai.createCompletion({
-            model: 'code-davinci-003',
+            model: 'code-davinci-002',
             prompt: `${CodeForPlayground}`,
-            temperature: 0.7,
-            max_tokens: 500,
+            temperature: 0,
+            max_tokens: 750,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
