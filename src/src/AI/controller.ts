@@ -90,14 +90,13 @@ export class AIController {
         // 5> Case for Python Docstring
         case 'PythonDocstring':
           var PythonDocString = await openai.createCompletion({
-            model: 'code-davinci-002',
-            prompt: `# Python 3.7\n \n\n${PythonDocstring}\n# An elaborate, high quality docstring for the above function or code:\n\"\"\"`,
+            model: 'text-davinci-003',
+            prompt: `${PythonDocstring}\n\nAn elaborate, high quality docstring for the above code.`,
             temperature: 0,
-            max_tokens: 150,
+            max_tokens: 350,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
-            stop: ['###'],
           });
 
           res.json({ data: PythonDocString.data, status_code: 200 });
@@ -193,13 +192,12 @@ export class AIController {
         case 'CalculateTheTimeComplexity':
           var CalculateTimeComplexity = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: `${CalculateTheTimeComplexity}\n\"\"\"\nThe time complexity of this function or code is`,
+            prompt: `${CalculateTheTimeComplexity}\n\nWhat is the time complexity of above code with clear explanation of why it is and how it is?`,
             temperature: 0,
-            max_tokens: 64,
+            max_tokens: 350,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
-            stop: ['\n'],
           });
 
           res.json({ data: CalculateTimeComplexity.data, status_code: 200 });
@@ -236,7 +234,7 @@ export class AIController {
         case 'convertfromPandastoPySpark':
           var convertfromPandastoSpark = await openai.createCompletion({
             model: 'code-davinci-002',
-            prompt: `${convertfromPandastoPySpark}\n\nConvert above the above Pandas code to PySpark`,
+            prompt: `${convertfromPandastoPySpark}\nConvert the above pandas to PySpark code`,
             temperature: 0,
             max_tokens: 256,
             top_p: 1,
@@ -529,10 +527,10 @@ export class AIController {
         // 19> Case for playground
         case 'CodeForPlayground':
           var playGround = await openai.createCompletion({
-            model: 'code-davinci-002',
+            model: 'text-davinci-003',
             prompt: `${CodeForPlayground}`,
-            temperature: 0,
-            max_tokens: 750,
+            temperature: 0.7,
+            max_tokens: 1553,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
