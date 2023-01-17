@@ -1,6 +1,11 @@
 import User from './model';
 import * as Jwt from 'jsonwebtoken';
 import * as Bcrypt from 'bcrypt';
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
+import { makeid } from '../../utils/common';
 // import * as multer from "multer";
 export default class userController {
   static async register(req: any, res: any, next: any) {
@@ -10,16 +15,25 @@ export default class userController {
     if (!checkUser) {
       try {
         const hash = await Bcrypt.hash(password, 10);
+        const otp = makeid(6);
         const data = {
           email: email,
           password: hash,
           firstName: firstName,
           lastName: lastName,
+          phone: phone,
+          otp: otp,
         };
+        await client.messages.create({
+          body: `Answergenie One time password:${otp} `,
+          messagingServiceSid: 'MG3a5f5e54596c7951e1c7532dced3c188',
+          to: phone,
+        });
 
         const add = await new User(data).save();
+
         return res.json({
-          message: 'REGISTRATION SUCCESSFULL',
+          message: 'OTP Sent to your Phone number',
           Status_code: 200,
           data: data,
         });
@@ -37,7 +51,28 @@ export default class userController {
       });
     }
   }
-
+  static async verifyotp(req: any, res: any) {
+    try {
+      const user = await User.findOne({ otp: req.body.otp });
+      if (user) {
+        const updateuser = await User.updateOne({ _id: user._id }, { otp: '', userverified: true });
+        res.json({
+          Status_code: 200,
+          message: 'User Verified Successfully',
+        });
+      } else {
+        res.json({
+          Status_code: 400,
+          message: 'Incorrect OTP',
+        });
+      }
+    } catch (e) {
+      return res.json({
+        Status_code: 400,
+        message: e,
+      });
+    }
+  }
   static async login(req: any, res: any) {
     try {
       let secret: any = process.env.JWT_SECRET_KEY;
@@ -100,27 +135,27 @@ export default class userController {
       return res.json({
         message: 'Update FAILED',
         data: error,
-        status_code: 400
+        status_code: 400,
       });
     }
   }
   static async updatePassword(req: any, res: any) {
     try {
       const _id = req.params.id;
-      const { oldpassword,password } = req.body;
+      const { oldpassword, password } = req.body;
       let user: any = await User.findOne({ _id });
-    
+
       let result = await Bcrypt.compare(oldpassword, user.password);
       if (!result) {
-        res.json({ message: 'Incorrect previous password',status_code: 400 });
+        res.json({ message: 'Incorrect previous password', status_code: 400 });
       } else {
         const hash = await Bcrypt.hash(password, 10);
-        console.log(hash)
+        console.log(hash);
         const data = await User.updateOne({ _id: _id }, { password: hash });
         return res.json({
           message: 'Update Password successfully',
           data: data,
-          status_code: 200
+          status_code: 200,
         });
       }
     } catch (error) {

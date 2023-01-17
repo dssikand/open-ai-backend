@@ -2,28 +2,44 @@ import Razorpay from 'razorpay';
 import Orders from './paymentmodel';
 import * as Jwt from 'jsonwebtoken';
 import User from '../src/user/model';
-var keySecret = process.env.KEY_SECRET;
-var keyId = process.env.RAZOR_SECRET;
-console.log(keySecret, keyId);
 
-var instance = new Razorpay({ key_id: keyId, key_secret: keySecret });
 import crypto from 'crypto';
+const { v4: uuidv4 } = require('uuid');
 
-export class razorpay {
+export class PayuPayments {
   static async paymentGateway(req: any, res: any) {
     try {
-      const options = {
-        amount: req.body.amount * 100,
-        currency: 'INR',
-        receipt: crypto.randomBytes(10).toString('hex'),
+      const payDetails = {
+        txnId: uuidv4(),
+        plan_name: req.body.name,
+        first_name: req.body.firstName,
+        email: req.body.email,
+        mobile: req.body.phone,
+        service_provide: 'Answergenie',
+        amount: req.body.amount,
+        call_back_url: `/payment/success`,
+        payu_merchant_key: process.env.MERCHANTKEY,
+        payu_url: process.env.PAYU_URL,
+        payu_fail_url: `/payment/failed`,
+        payu_cancel_url: `/payment/cancel`,
+        hashString: '',
+        payu_sha_token: '',
+        udf1: '',
+        udf2: '',
+        udf3: '',
+        udf4: '',
+        udf5: '',
       };
+      const amount: any = payDetails.amount;
+      payDetails.hashString = `${process.env.MERCHANTKEY}|${payDetails.txnId}|${parseInt(amount)}|${
+        payDetails.plan_name
+      }|${payDetails.first_name}|${payDetails.email}|${process.env.SALT}`;
+      payDetails.payu_sha_token = crypto.createHash('sha512').update(payDetails.hashString).digest('hex');
 
-      instance.orders.create(options, (error: any, order: any) => {
-        if (error) {
-          console.log(error);
-          return res.status(500).json({ message: 'Something Went Wrong!' });
-        }
-        res.status(200).json({ data: order });
+      return res.json({
+        success: true,
+        code: 200,
+        info: payDetails,
       });
     } catch (error) {
       res.status(500).json({ message: 'Internal Server Error!' });

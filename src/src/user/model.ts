@@ -12,6 +12,8 @@ const registerSchema = new mongoose.Schema({
   requestBalance: { type: Number, default: 5 },
   role: { type: String, default: '', enum: ['', 'Guest', 'SuperAdmin', 'Admin', 'Employee', 'Manager'] },
   plan: { type: String },
+  otp: { type: Number },
+  userverified: { type: Boolean, default: false },
   image: {
     type: Object,
   },

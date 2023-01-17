@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import {razorpay} from "./RazorPay"
+import { PayuPayments } from './RazorPay';
 
 class RazorRouter {
   public router: Router;
@@ -10,8 +10,8 @@ class RazorRouter {
   }
 
   postRoutes() {
-    this.router.post('/payment',razorpay.paymentGateway);
-     this.router.post('/verify', razorpay.verify);
+    this.router.post('/initatepayment', PayuPayments.paymentGateway);
+    this.router.post('/verify', PayuPayments.verify);
   }
 }
 export default new RazorRouter().router;

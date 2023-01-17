@@ -17,6 +17,7 @@ class UserRouter {
     this.router.patch('/updateuser/:id', userController.updateUser);
     this.router.patch('/updatepassword/:id', userController.updatePassword);
     this.router.get('/currentuser', userController.getCurrentUser);
+    this.router.patch('/verifyotp', userController.verifyotp);
   }
 }
 export default new UserRouter().router;
