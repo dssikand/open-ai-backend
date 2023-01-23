@@ -12,6 +12,7 @@ class RazorRouter {
   postRoutes() {
     this.router.post('/initatepayment', PayuPayments.paymentGateway);
     this.router.post('/verify', PayuPayments.verify);
+    this.router.get('/getPrices', PayuPayments.getPrices);
   }
 }
 export default new RazorRouter().router;

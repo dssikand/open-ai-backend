@@ -9,22 +9,13 @@ const stripe = require('stripe')(process.env.STRIPE_SECRTE);
 export class PayuPayments {
   static async paymentGateway(req: any, res: any) {
     try {
+      const frontendurl = process.env.ENV === "dev" ? process.env.FRONTDEV : process.env.FRONTPROD
       console.log(req.body);
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: Math.round(req.body.amount * 100),
-        currency: 'usd',
-        payment_method_types: ['card'],
-        description: req.body.name,
-        shipping: {
-          name: req.body.customername,
-          address: {
-            line1: '510 Townsend St',
-            postal_code: '98140',
-            city: 'San Francisco',
-            state: 'CA',
-            country: 'US',
-          },
-        },
+      const paymentIntent = await stripe.checkout.sessions.create({
+        success_url: `${frontendurl}/price?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${frontendurl}/price`,
+        line_items: [{ price: req.body.priceid, quantity: 1 }],
+        mode: 'subscription',
       });
       return res.json({
         success: true,
@@ -36,14 +27,26 @@ export class PayuPayments {
       console.log(error);
     }
   }
-
+  static async getPrices(req: any, res: any) {
+    try {
+      const prices = await stripe.prices.list({
+        limit: 4,
+      });
+      res.send(prices);
+    } catch (e) {
+      return e;
+    }
+  }
   static async verify(req: any, res: any) {
     var Secret: any = process.env.KEY_SECRET;
     try {
       const authHeader = req.headers.authorization;
       const decodeduser: any = Jwt.decode(authHeader);
       const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderamount, pid } = req.body;
-      const paymentIntent = await stripe.paymentIntents.retrieve(pid);
+     
+const session = await stripe.checkout.sessions.retrieve(pid);
+console.log(session, 'session');
+const paymentIntent = await stripe.invoices.retrieve(session.invoice);
       console.log(paymentIntent, 'paymentIntent');
       // const sign = razorpay_order_id + '|' + razorpay_payment_id;
       // const expectedSign: any = crypto
@@ -55,7 +58,6 @@ export class PayuPayments {
       const Order = new Orders({
         userid: decodeduser._id,
         orderDetails: paymentIntent,
-        planname: paymentIntent.description,
       });
       let amount = paymentIntent.amount / 100;
       const increatement =
