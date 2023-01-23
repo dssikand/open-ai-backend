@@ -59,7 +59,7 @@ const paymentIntent = await stripe.invoices.retrieve(session.invoice);
         userid: decodeduser._id,
         orderDetails: paymentIntent,
       });
-      let amount = paymentIntent.amount / 100;
+      let amount = paymentIntent.total / 100;
       const increatement =
         amount == 19.9 ? 70 : amount == 39.9 ? 130 : amount == 89.9 ? 350 : amount == 139.9 ? 2000 : '';
       const neworder = await Order.save();
