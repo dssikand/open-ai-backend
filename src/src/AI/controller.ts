@@ -7,6 +7,7 @@ const openai = new OpenAIApi(configuration);
 
 export class AIController {
   static async AI(req: any, res: any) {
+    console.log(process.env.OPENAI_API_KEY);
     console.log(req.body);
     var Text = req.body.text;
     var SqlQuery = req.body.text;

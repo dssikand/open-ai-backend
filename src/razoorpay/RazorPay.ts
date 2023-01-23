@@ -2,44 +2,34 @@ import Razorpay from 'razorpay';
 import Orders from './paymentmodel';
 import * as Jwt from 'jsonwebtoken';
 import User from '../src/user/model';
-
 import crypto from 'crypto';
 const { v4: uuidv4 } = require('uuid');
+const stripe = require('stripe')(process.env.STRIPE_SECRTE);
 
 export class PayuPayments {
   static async paymentGateway(req: any, res: any) {
     try {
-      const payDetails = {
-        txnId: uuidv4(),
-        plan_name: req.body.name,
-        first_name: req.body.firstName,
-        email: req.body.email,
-        mobile: req.body.phone,
-        service_provide: 'Answergenie',
-        amount: req.body.amount,
-        call_back_url: `/payment/success`,
-        payu_merchant_key: process.env.MERCHANTKEY,
-        payu_url: process.env.PAYU_URL,
-        payu_fail_url: `/payment/failed`,
-        payu_cancel_url: `/payment/cancel`,
-        hashString: '',
-        payu_sha_token: '',
-        udf1: '',
-        udf2: '',
-        udf3: '',
-        udf4: '',
-        udf5: '',
-      };
-      const amount: any = payDetails.amount;
-      payDetails.hashString = `${process.env.MERCHANTKEY}|${payDetails.txnId}|${parseInt(amount)}|${
-        payDetails.plan_name
-      }|${payDetails.first_name}|${payDetails.email}|${process.env.SALT}`;
-      payDetails.payu_sha_token = crypto.createHash('sha512').update(payDetails.hashString).digest('hex');
-
+      console.log(req.body);
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(req.body.amount * 100),
+        currency: 'usd',
+        payment_method_types: ['card'],
+        description: req.body.name,
+        shipping: {
+          name: req.body.customername,
+          address: {
+            line1: '510 Townsend St',
+            postal_code: '98140',
+            city: 'San Francisco',
+            state: 'CA',
+            country: 'US',
+          },
+        },
+      });
       return res.json({
         success: true,
         code: 200,
-        info: payDetails,
+        info: paymentIntent,
       });
     } catch (error) {
       res.status(500).json({ message: 'Internal Server Error!' });
@@ -52,7 +42,9 @@ export class PayuPayments {
     try {
       const authHeader = req.headers.authorization;
       const decodeduser: any = Jwt.decode(authHeader);
-      const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderamount } = req.body;
+      const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderamount, pid } = req.body;
+      const paymentIntent = await stripe.paymentIntents.retrieve(pid);
+      console.log(paymentIntent, 'paymentIntent');
       // const sign = razorpay_order_id + '|' + razorpay_payment_id;
       // const expectedSign: any = crypto
       //   .createHmac('sha256', process.env.KEY_SECRET || '')
@@ -62,11 +54,12 @@ export class PayuPayments {
       // if (razorpay_signature === expectedSign) {
       const Order = new Orders({
         userid: decodeduser._id,
-        razorpay_order_id,
-        razorpay_payment_id,
-        orderamount,
+        orderDetails: paymentIntent,
+        planname: paymentIntent.description,
       });
-      const increatement = orderamount >= 10 ? 5 : orderamount > 50 ? 20 : 30;
+      let amount = paymentIntent.amount / 100;
+      const increatement =
+        amount == 19.9 ? 70 : amount == 39.9 ? 130 : amount == 89.9 ? 350 : amount == 139.9 ? 2000 : '';
       const neworder = await Order.save();
       await User.updateOne(
         { _id: decodeduser._id },

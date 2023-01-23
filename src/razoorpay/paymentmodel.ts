@@ -3,13 +3,13 @@ import { model } from 'mongoose';
 
 const orderSchema = new mongoose.Schema(
   {
-    razorpay_order_id: String,
-    razorpay_payment_id: String,
+    orderDetails: { type: Object },
     orderamount: Number,
     userid: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
     },
+    planname: String,
   },
   { timestamps: true }
 );
