@@ -13,6 +13,7 @@ export class PayuPayments {
       console.log(req.body);
       const paymentIntent = await stripe.checkout.sessions.create({
         success_url: `${frontendurl}/price?session_id={CHECKOUT_SESSION_ID}`,
+        shipping_address_collection: { allowed_countries: ['IN'] },
         cancel_url: `${frontendurl}/price`,
         line_items: [{ price: req.body.priceid, quantity: 1 }],
         mode: 'subscription',

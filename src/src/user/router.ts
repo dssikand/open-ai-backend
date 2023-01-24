@@ -14,6 +14,7 @@ class UserRouter {
     this.router.use(cors.default());
     this.router.post('/register', userController.register);
     this.router.post('/login', userController.login);
+    this.router.post('/forgotpassword', userController.forgotPassword);
     this.router.patch('/updateuser/:id', userController.updateUser);
     this.router.patch('/updatepassword/:id', userController.updatePassword);
     this.router.get('/currentuser', userController.getCurrentUser);

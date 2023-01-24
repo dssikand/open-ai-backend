@@ -1,7 +1,8 @@
 import User from './model';
 import * as Jwt from 'jsonwebtoken';
 import * as Bcrypt from 'bcrypt';
-
+const nodemailer = require('nodemailer');
+const json = require('../../utils/keys.json');
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
@@ -48,6 +49,67 @@ export default class userController {
       return res.json({
         Status_code: 400,
         message: 'User already exist',
+      });
+    }
+  }
+  static async forgotPassword(req: any, res: any) {
+    try {
+      const userd = await User.findOne({ email: req.body.email });
+      if (userd) {
+        const frontendurl = process.env.ENV === 'dev' ? process.env.FRONTDEV : process.env.FRONTPROD;
+        let secret: any = process.env.JWT_SECRET_KEY;
+
+        const token = Jwt.sign(
+          {
+            email: userd.email,
+            _id: userd._id,
+            requestBalance: userd.requestBalance,
+          },
+          secret
+        );
+        const finalURL = `${frontendurl}?token=${token}`;
+
+        const transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: {
+            type: 'OAuth2',
+            user: 'saymefit@gmail.com', //your permissioned service account member e-mail address
+            serviceClient: json.client_id,
+            privateKey: json.private_key,
+          },
+        });
+
+        await transporter.verify();
+
+        const response = await transporter.sendMail({
+          from: json.client_email,
+          to: userd.email, //you can change this to any other e-mail address and it should work!
+          subject: 'Reset Password',
+          text: `<strong>Here is your Reset Password Link.</strong><a href={${finalURL}}>Reset Password Link</a>`,
+        });
+
+        // const msg = {
+        //   to: userd.email,
+        //   from: 'gmsmastrolinks@gmail.com', // Use the email address or domain you verified above
+        //   subject: 'Reset Password',
+        //   text: 'Hi, You have requested for reset password!',
+        //   html: `<strong>Here is your Reset Password Link.</strong><a href={${finalURL}}>Reset Password Link</a>`,
+        // };
+        // const response = await sgMail.send(msg);
+        console.log(response);
+        res.json({
+          Status_code: 200,
+          message: 'Mail Sent Successfully',
+        });
+      } else {
+        throw new Error('User is Not Register with us');
+      }
+    } catch (e) {
+      res.json({
+        Status_code: 400,
+        message: e,
       });
     }
   }
