@@ -18,7 +18,6 @@ export class PayuPayments {
           cancel_url: `${frontendurl}/price`,
           line_items: [{ price: req.body.priceid, quantity: 1 }],
           mode: 'subscription',
-          currency: currency,
         },
         {
           stripeAccount: 'acct_1MQQfUSDAFNCBLsL',
