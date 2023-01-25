@@ -11,13 +11,19 @@ export class PayuPayments {
     try {
       const frontendurl = process.env.ENV === "dev" ? process.env.FRONTDEV : process.env.FRONTPROD
       console.log(req.body);
-      const paymentIntent = await stripe.checkout.sessions.create({
-        success_url: `${frontendurl}/price?session_id={CHECKOUT_SESSION_ID}`,
-        shipping_address_collection: { allowed_countries: ['IN'] },
-        cancel_url: `${frontendurl}/price`,
-        line_items: [{ price: req.body.priceid, quantity: 1 }],
-        mode: 'subscription',
-      });
+      let currency = req.body.country == 'India' ? 'inr' : 'usd';
+      const paymentIntent = await stripe.checkout.sessions.create(
+        {
+          success_url: `${frontendurl}/price?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${frontendurl}/price`,
+          line_items: [{ price: req.body.priceid, quantity: 1 }],
+          mode: 'subscription',
+          currency: currency,
+        },
+        {
+          stripeAccount: 'acct_1MQQfUSDAFNCBLsL',
+        }
+      );
       return res.json({
         success: true,
         code: 200,
@@ -35,6 +41,7 @@ export class PayuPayments {
       });
       res.send(prices);
     } catch (e) {
+      console.log(e);
       return e;
     }
   }
