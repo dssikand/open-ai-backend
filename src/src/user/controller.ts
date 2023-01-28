@@ -167,12 +167,14 @@ export default class userController {
         }
       } else {
         return res.status(401).json({
+          Status_code: 400,
           message: 'email not matched',
         });
       }
     } catch (error) {
       console.log(error, 'Erro');
       return res.json({
+        Status_code: 400,
         message: 'LOGIN FAILED',
       });
     }
