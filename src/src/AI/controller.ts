@@ -41,6 +41,13 @@ export class AIController {
     var MCQgeneration  = req.body.text;
     var Questiongeneration  = req.body.text;
     var Essaywriting  = req.body.text;
+    var Oracle  = req.body.text;
+    var PostGresql  = req.body.text;
+    var view  = req.body.text;
+    var storeprocedure  = req.body.text;
+    var anisql  = req.body.text;
+
+
 
 
 
@@ -392,8 +399,8 @@ export class AIController {
         case 'postgresql':
           var sqlResponse = await openai.createChatCompletion({
               messages: [
-              {role:"system",content:"You are a helpful AI assistant, where you will summarize text or sentence or paragraph. It must be summarized in such a way that it must be informative."},
-              {role:"user", content: Text}
+              {role:"system",content:"You are a helpful AI assistant, where you will write the Postgres SQL query for the question asked with the explanation of every line."},
+              {role:"user", content: PostGresql}
             ],
             model: `${model}`,
           });
@@ -402,8 +409,8 @@ export class AIController {
         case 'oraclesql':
           var sqlResponse = await openai.createChatCompletion({
               messages: [
-              {role:"system",content:"You are a helpful AI assistant, where you will summarize text or sentence or paragraph. It must be summarized in such a way that it must be informative."},
-              {role:"user", content: Text}
+              {role:"system",content:"You are a helpful AI assistant, where you will write the Oracle SQL query for the question asked with the explanation of every line."},
+              {role:"user", content: Oracle}
             ],
             model: `${model}`,
           });
@@ -412,8 +419,8 @@ export class AIController {
         case 'anisql':
           var sqlResponse = await openai.createChatCompletion({
               messages: [
-              {role:"system",content:"You are a helpful AI assistant, where you will summarize text or sentence or paragraph. It must be summarized in such a way that it must be informative."},
-              {role:"user", content: Text}
+              {role:"system",content:"You are a helpful AI assistant, where you will write the AnsiSQL query for the question asked with the explanation of every line."},
+              {role:"user", content: anisql}
             ],
             model: `${model}`,
           });
@@ -422,8 +429,8 @@ export class AIController {
         case 'storeprocedure':
           var sqlResponse = await openai.createChatCompletion({
                messages: [
-              {role:"system",content:"You are a helpful AI assistant, where you will summarize text or sentence or paragraph. It must be summarized in such a way that it must be informative."},
-              {role:"user", content: Text}
+              {role:"system",content:"You are a helpful AI assistant, where you will write the Store Procedure in SQL for the question asked with the explanation of every line."},
+              {role:"user", content: storeprocedure}
             ],
             model: `${model}`,
           });
@@ -432,8 +439,8 @@ export class AIController {
         case 'view':
           var sqlResponse = await openai.createChatCompletion({
                messages: [
-              {role:"system",content:"You are a helpful AI assistant, where you will summarize text or sentence or paragraph. It must be summarized in such a way that it must be informative."},
-              {role:"user", content: Text}
+              {role:"system",content:"You are a helpful AI assistant, where you will write the Views in SQL for the question asked with the explanation of every line."},
+              {role:"user", content: view}
             ],
             model: `${model}`,
           });
