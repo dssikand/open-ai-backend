@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import {AIController} from '../AI/controller';
+import { AIController } from '../AI/controller';
 import { GlobalMiddleWare } from '../../middlewares/GlobalMiddleWares';
 import * as cors from 'cors';
 class AIRouter {
