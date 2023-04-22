@@ -12,7 +12,7 @@ class AIRouter {
 
   getRoutes() {
     // this.router.use(cors.default());
-    this.router.post('/AI',  AIController.AI);
+    this.router.post('/AI',GlobalMiddleWare.checkRequest,  AIController.AI);
   }
 }
 export default new AIRouter().router;
