@@ -4,7 +4,7 @@ const configuration = new Configuration({
 });
 
 const openai = new OpenAIApi(configuration);
-const model = 'gpt-4';
+const model = 'gpt-3.5-turbo';
 
 export class AIController {
   static async AI(req: any, res: any) {
