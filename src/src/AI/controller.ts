@@ -12,11 +12,11 @@ export class AIController {
     console.log(req.body);
     var Text = req.body.text;
     var SqlQuery = req.body.text;
-    var EnglishtoPython = req.body.text;
+    var NaturalLanguagetoPython = req.body.text;
     var PythonBugfixer = req.body.text;
-    var pythonDocString   = req.body.text;
-    var EnglishtoJava = req.body.text;
-    var EnglishtoScala = req.body.text;
+    var pythonDocString = req.body.text;
+    var NaturalLanguagetoJava = req.body.text;
+    var NaturalLanguagetoScala = req.body.text;
     var Summarizefora2ndgrader = req.body.text;
     var SQLTranslate = req.body.text;
     var ParseUnstructureddata = req.body.text;
@@ -36,22 +36,16 @@ export class AIController {
     var Plagiarismremover = req.body.text;
     var ExtractImportantwords = req.body.text;
     var VBAcode = req.body.text;
-    var Aptitudeanswers  = req.body.text;
-    var GetExcelformula  = req.body.text;
-    var MCQgeneration  = req.body.text;
-    var Questiongeneration  = req.body.text;
-    var Essaywriting  = req.body.text;
-    var Oracle  = req.body.text;
-    var PostGresql  = req.body.text;
-    var view  = req.body.text;
-    var storeprocedure  = req.body.text;
-    var anisql  = req.body.text;
-
-
-
-
-
-
+    var Aptitudeanswers = req.body.text;
+    var GetExcelformula = req.body.text;
+    var MCQgeneration = req.body.text;
+    var Questiongeneration = req.body.text;
+    var Essaywriting = req.body.text;
+    var Oracle = req.body.text;
+    var PostGresql = req.body.text;
+    var view = req.body.text;
+    var storeprocedure = req.body.text;
+    var anisql = req.body.text;
 
     try {
       switch (req.body.type) {
@@ -100,7 +94,7 @@ export class AIController {
                 content:
                   'You are a helpful AI assistant, where you will write the Python code for the question asked with the explanation of every line.',
               },
-              { role: 'user', content: EnglishtoPython },
+              { role: 'user', content: NaturalLanguagetoPython },
             ],
             model: `${model}`,
           });
@@ -147,7 +141,7 @@ export class AIController {
                 content:
                   'You are a helpful AI assistant, where you will write the Java code for the question asked with the explanation of every line.',
               },
-              { role: 'user', content: EnglishtoJava },
+              { role: 'user', content: NaturalLanguagetoJava },
             ],
             model: `${model}`,
           });
@@ -164,7 +158,7 @@ export class AIController {
                 content:
                   'You are a helpful AI assistant, where you will write the Scala code for the question asked with the explanation of every line.',
               },
-              { role: 'user', content: EnglishtoScala },
+              { role: 'user', content: NaturalLanguagetoScala },
             ],
             model: `${model}`,
           });
