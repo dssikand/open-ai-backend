@@ -1,8 +1,6 @@
-import { Server } from "./server";
+import { ServerSystem } from './server';
 
-let server = new Server().app;
+let server = new ServerSystem();
 let port = process.env.PORT || 5000;
 
-server.listen(port, () => {
-  console.log("server is running at", port);
-});
+server.startServer();
