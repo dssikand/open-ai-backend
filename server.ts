@@ -86,7 +86,8 @@ export class ServerSystem {
   configureSocketIO() {
     this.io = new Server(this.server, {
       cors: {
-        origin: '*',
+        origin: 'https://example.com',
+        methods: ['GET', 'POST'],
       },
     });
   }
